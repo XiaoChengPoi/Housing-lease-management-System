@@ -14,7 +14,19 @@ public class HouseService {
     public LinkedList<House> getHouses(){
         return houses;
     }
+    //单例模式设计思想
+    private static HouseService service ;
+    //私有化构造器
+    private HouseService(){
 
+    }
+    //提供获取业务模块的方法
+    public static HouseService getInstance(){
+        if(service == null){
+            service = new HouseService();
+        }
+        return service;
+    }
     //打印房屋清单
     public void printHouses(LinkedList<House> houses){
         System.out.println("序号"+"\t\t"+"房主"+"\t\t"+"联系电话"+"\t\t"+"房屋地址"+"\t\t"+"月租"+"\t\t"+"出租状态");
@@ -135,7 +147,7 @@ public class HouseService {
                 }
             }
 
-
+            //如果存在
             if(flag){
                 //选择要修改哪些信息
                 boolean control = true;//控制循环
@@ -173,8 +185,20 @@ public class HouseService {
                     switch(chose){
                         case 1:
                             System.out.println("修改后的信息为：");
-                            house.setId(Integer.parseInt(reader.readLine()));
+                            int id1 = Integer.parseInt(reader.readLine());//存储输入的id
+                            boolean isCopy = false;//判断ID是否重复
+                            for(Object obj:houses){
+                                House house2 = (House) obj;
+                                if(house2.getId()==id1){
+                                    System.out.println("该ID已存在，请更换其他ID！");
+                                    isCopy = true;
+                                }
+                            }
+                            if(isCopy == false){
+                            house.setId(id1);
                             System.out.println("修改成功！");
+                            }
+                            else System.out.println("修改失败!");
                             break;
                         case 2:
                             System.out.println("修改后的信息为：");

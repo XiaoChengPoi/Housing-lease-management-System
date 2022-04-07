@@ -6,10 +6,21 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 
 public class HouseView {
+    //采用单例模式设计思想
+    private static HouseView view;
+    private HouseView(){
+
+    }
+    public static HouseView getInstance(){
+        if(view == null){
+            view = new HouseView();
+        }
+        return view;
+    }
     //菜单循环控制
     boolean isLoop = true;
     //实例一个业务模块作为属性并调用其方法
-    private HouseService service = new HouseService();
+    private HouseService service = HouseService.getInstance();
     //提供一个接口获取业务类
     public HouseService getService(){
         return service;
